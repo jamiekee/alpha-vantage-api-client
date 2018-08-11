@@ -16,6 +16,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * A custom deserializer for the TimeSeries API response.
+ * It is a custom deserializer due to the complex structure of the response.
+ * Firstly, field names are numbered, and are numbered differently between different
+ * requests, so the fields need to be sanitized before deserialization.
+ * Secondly, the field name for the actual data returned by the API i.e. the non
+ * meta data section, is a dynamic string that changes between requests.
+ */
 public class TimeSeriesResultDeserializer extends JsonDeserializer<TimeSeriesResult> {
 
   @Override

@@ -4,14 +4,23 @@ import io.jamiekee.alphavantage.api.interfaces.APIRequest;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import lombok.Builder;
 
+/**
+ * A wrapper class for the available query parameters for the TimeSeries
+ * endpoints of the API.
+ */
 @Builder
 public class TimeSeriesRequest implements APIRequest {
 
-  public String toHttpPathVariables() {
+  /**
+   * Convert all the selected query parameters to a query parameter string
+   * to be used the in the API request.
+   * @return A Query parameter string.
+   */
+  public String toQueryParameters() {
     StringBuilder builder = new StringBuilder();
     builder
         .append("function=")
-        .append(timeSeriesFunction.getPathVariableKey());
+        .append(timeSeriesFunction.getQueryParameterKey());
     builder
         .append("&symbol=")
         .append(symbol);
@@ -23,7 +32,7 @@ public class TimeSeriesRequest implements APIRequest {
     if (intradayInterval != null) {
       builder
           .append("&interval=")
-          .append(intradayInterval.getPathVariableKey());
+          .append(intradayInterval.getQueryParameterKey());
     }
     return builder.toString();
   }

@@ -5,6 +5,10 @@ import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.timeseries.IntradayInterval;
 import lombok.Data;
 
+/**
+ * Part of the Response from the API is a meta data section.
+ * This java class represents the meta data in the response.
+ */
 @Data
 public class MetaData {
   @JsonProperty("Information")

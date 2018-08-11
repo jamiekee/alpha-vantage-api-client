@@ -11,14 +11,19 @@ import java.nio.charset.Charset;
 
 class Request {
 
-  static String sendRequest(String pathVariables) {
+  /**
+   * This method performs the HTTP call to the Alpha Vantage API.
+   * @param queryParameters Perform the API call with the given query parameters.
+   * @return The API response in JSON.
+   */
+  static String sendRequest(String queryParameters) {
     ResponseEntity<String> responseEntity = new RestTemplate()
-        .getForEntity(ALPHA_VANTAGE_URL + pathVariables, String.class);
+        .getForEntity(ALPHA_VANTAGE_URL + queryParameters, String.class);
     try {
       // Check if the response was an error response first.
       ErrorResponse errorResponse =
           JsonParser.toObject(responseEntity.getBody(), ErrorResponse.class);
-      errorResponse.setPathVariables(pathVariables);
+      errorResponse.setQueryParameters(queryParameters);
       throw new HttpServerErrorException(
           responseEntity.getStatusCode(),
           errorResponse.toString(),

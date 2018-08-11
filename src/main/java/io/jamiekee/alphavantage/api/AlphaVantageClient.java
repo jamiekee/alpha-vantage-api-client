@@ -33,14 +33,14 @@ public class AlphaVantageClient implements IAlphaVantageClient {
       IntradayInterval intradayInterval, String symbol, OutputSize outputSize
   )
       throws IOException {
-    String pathVariables = TimeSeriesRequest.builder()
+    String queryParameters = TimeSeriesRequest.builder()
         .timeSeriesFunction(TimeSeriesFunction.INTRADAY)
         .intradayInterval(intradayInterval)
         .symbol(symbol)
         .outputSize(outputSize)
         .build()
-        .toHttpPathVariables();
-    return getTimeSeriesResult(pathVariables);
+        .toQueryParameters();
+    return getTimeSeriesResult(queryParameters);
   }
 
   @Override
@@ -50,32 +50,29 @@ public class AlphaVantageClient implements IAlphaVantageClient {
   }
 
   @Override
-  public TimeSeriesResult getTimeSeries(
-      TimeSeriesFunction timeSeriesFunction, IntradayInterval intradayInterval,
-      String symbol
-  )
-      throws IOException {
-    return getTimeSeries(intradayInterval, symbol);
-  }
-
-  @Override
   public TimeSeriesResult getTimeSeries(TimeSeriesFunction timeSeriesFunction, String symbol, OutputSize outputSize)
       throws IOException {
-    String pathVariables = TimeSeriesRequest.builder()
+    String queryParameters = TimeSeriesRequest.builder()
         .timeSeriesFunction(timeSeriesFunction)
         .symbol(symbol)
         .outputSize(outputSize)
         .build()
-        .toHttpPathVariables();
-    return getTimeSeriesResult(pathVariables);
+        .toQueryParameters();
+    return getTimeSeriesResult(queryParameters);
   }
 
-  private TimeSeriesResult getTimeSeriesResult(String pathVariables)
+  /**
+   * Append the API Key and the DataType to the query parameters and send the
+   * API request to Alpha Vantage.
+   * @param queryParameters The query parameter string from the Request.
+   * @return The Result of the API request.
+   */
+  private TimeSeriesResult getTimeSeriesResult(String queryParameters)
       throws IOException {
-    pathVariables += "&datatype=" + DataType.JSON;
-    pathVariables += "&apikey=" + configuration.getApiKey();
+    queryParameters += "&datatype=" + DataType.JSON;
+    queryParameters += "&apikey=" + configuration.getApiKey();
     return JsonParser
-        .toObject(Request.sendRequest(pathVariables), TimeSeriesResult.class);
+        .toObject(Request.sendRequest(queryParameters), TimeSeriesResult.class);
   }
 
   private AlphaVantageClientConfiguration configuration;

@@ -5,10 +5,18 @@ import lombok.Data;
 
 import java.util.Optional;
 
+/**
+ * Representation of the data that is returned by the TimeSeries endpoints
+ * in the API.
+ * The values that are returned for the adjusted TimeSeries endpoints are
+ * {@code Optional} typed.
+ */
 @Data
 public class TimeSeries {
 
-
+  /*
+   Override the getters to return optionals.
+  */
   public Optional<Double> getAdjustedClose() {
     return Optional.ofNullable(adjustedClose);
   }

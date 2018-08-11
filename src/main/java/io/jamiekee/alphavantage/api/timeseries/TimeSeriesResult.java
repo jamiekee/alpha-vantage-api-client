@@ -6,6 +6,9 @@ import lombok.Data;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * A representation of the API response for the TimeSeries endpoints.
+ */
 @Data
 public class TimeSeriesResult {
   private MetaData metaData;
