@@ -1,8 +1,5 @@
 package io.jamiekee.alphavantage.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-
 import java.io.IOException;
 
 import io.jamiekee.alphavantage.api.configuration.AlphaVantageClientConfiguration;
@@ -13,36 +10,30 @@ import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesRequest;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResult;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResultDeserializer;
+import io.jamiekee.alphavantage.api.utils.JsonParser;
 
 public class AlphaVantageClient implements IAlphaVantageClient {
 
   public AlphaVantageClient(AlphaVantageClientConfiguration configuration) {
     this.configuration = configuration;
-    SimpleModule simpleModule = new SimpleModule();
-    simpleModule.addDeserializer(TimeSeriesResult.class, new TimeSeriesResultDeserializer());
-    objectMapper.registerModule(simpleModule);
+    JsonParser.addDeserializer(TimeSeriesResult.class, new TimeSeriesResultDeserializer());
   }
 
   @Override
   public TimeSeriesResult getTimeSeries(TimeSeriesFunction timeSeriesFunction, String symbol)
       throws IOException {
-    return getTimeSeries(new TimeSeriesRequest(timeSeriesFunction, symbol));
+    return getTimeSeries(timeSeriesFunction, symbol, OutputSize.COMPACT);
   }
 
   @Override
   public TimeSeriesResult getTimeSeries(TimeSeriesFunction timeSeriesFunction, String symbol, OutputSize outputSize)
       throws IOException {
-    return getTimeSeries(new TimeSeriesRequest(timeSeriesFunction, symbol, outputSize));
-  }
-
-  private TimeSeriesResult getTimeSeries(TimeSeriesRequest request)
-      throws IOException {
+    TimeSeriesRequest request = new TimeSeriesRequest(timeSeriesFunction, symbol, outputSize);
     String pathVariables = request.toHttpPathVariables();
     pathVariables += "&datatype=" + DataType.JSON;
     pathVariables += "&apikey=" + configuration.getApiKey();
-    return objectMapper.readValue(Request.sendRequest(pathVariables), TimeSeriesResult.class);
+    return JsonParser.toObject(Request.sendRequest(pathVariables), TimeSeriesResult.class);
   }
 
   private AlphaVantageClientConfiguration configuration;
-  private ObjectMapper objectMapper = new ObjectMapper();
 }

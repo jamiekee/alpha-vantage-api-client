@@ -1,8 +1,7 @@
 package io.jamiekee.alphavantage.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jamiekee.alphavantage.api.response.ErrorResponse;
-import org.springframework.http.HttpStatus;
+import io.jamiekee.alphavantage.api.utils.JsonParser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -18,7 +17,7 @@ class Request {
     try {
       // Check if the response was an error response first.
       ErrorResponse errorResponse =
-          objectMapper.readValue(responseEntity.getBody(), ErrorResponse.class);
+          JsonParser.toObject(responseEntity.getBody(), ErrorResponse.class);
       errorResponse.setPathVariables(pathVariables);
       throw new HttpServerErrorException(
           responseEntity.getStatusCode(),
@@ -35,5 +34,4 @@ class Request {
   }
 
   private final static String ALPHA_VANTAGE_URL = "https://www.alphavantage.co/query?";
-  private final static ObjectMapper objectMapper = new ObjectMapper();
 }
