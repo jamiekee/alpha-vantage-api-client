@@ -1,4 +1,4 @@
-package timeseries;
+package io.jamiekee.alphavantage.api.timeseries;
 
 public enum TimeSeriesFunction {
   DAILY("TIME_SERIES_DAILY"),

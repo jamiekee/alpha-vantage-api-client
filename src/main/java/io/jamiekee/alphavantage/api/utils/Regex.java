@@ -1,4 +1,4 @@
-package utils;
+package io.jamiekee.alphavantage.api.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

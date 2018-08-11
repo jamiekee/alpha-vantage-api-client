@@ -1,9 +1,9 @@
-package timeseries;
+package io.jamiekee.alphavantage.api.timeseries;
 
 import java.util.Date;
 import java.util.Map;
 import lombok.Data;
-import response.MetaData;
+import io.jamiekee.alphavantage.api.response.MetaData;
 
 @Data
 public class TimeSeriesResult {

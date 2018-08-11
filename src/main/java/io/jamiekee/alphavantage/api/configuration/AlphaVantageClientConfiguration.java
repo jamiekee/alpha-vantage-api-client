@@ -1,4 +1,4 @@
-package configuration;
+package io.jamiekee.alphavantage.api.configuration;
 
 public class AlphaVantageClientConfiguration {
   public AlphaVantageClientConfiguration(String apiKey) {

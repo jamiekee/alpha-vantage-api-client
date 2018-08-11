@@ -1,4 +1,4 @@
-package interfaces;
+package io.jamiekee.alphavantage.api.interfaces;
 
 public interface APIRequest {
 

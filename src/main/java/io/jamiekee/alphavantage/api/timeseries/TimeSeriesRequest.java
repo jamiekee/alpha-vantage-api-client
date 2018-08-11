@@ -1,9 +1,8 @@
-package timeseries;
+package io.jamiekee.alphavantage.api.timeseries;
 
-import interfaces.APIRequest;
-import request.OutputSize;
+import io.jamiekee.alphavantage.api.request.OutputSize;
 
-public class TimeSeriesRequest implements APIRequest {
+public class TimeSeriesRequest implements io.jamiekee.alphavantage.api.interfaces.APIRequest {
 
   public TimeSeriesRequest(TimeSeriesFunction timeSeriesFunction, String symbol) {
     this.timeSeriesFunction = timeSeriesFunction;
@@ -19,7 +18,7 @@ public class TimeSeriesRequest implements APIRequest {
   public String toHttpPathVariables() {
     StringBuilder builder = new StringBuilder();
     builder
-        .append("timeSeriesFunction=")
+        .append("function=")
         .append(timeSeriesFunction.getPathVariableKey());
     builder
         .append("&symbol=")

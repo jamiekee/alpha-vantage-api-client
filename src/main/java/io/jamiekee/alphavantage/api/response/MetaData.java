@@ -1,8 +1,8 @@
-package response;
+package io.jamiekee.alphavantage.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import request.OutputSize;
+import io.jamiekee.alphavantage.api.request.OutputSize;
 
 @Data
 public class MetaData {
