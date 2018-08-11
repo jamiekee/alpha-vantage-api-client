@@ -1,8 +1,9 @@
 package io.jamiekee.alphavantage.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 import io.jamiekee.alphavantage.api.request.OutputSize;
+import io.jamiekee.alphavantage.api.timeseries.IntradayInterval;
+import lombok.Data;
 
 @Data
 public class MetaData {
@@ -16,4 +17,6 @@ public class MetaData {
   private String timezone;
   @JsonProperty("Last Refreshed")
   private String lastRefreshed;
+  @JsonProperty("Interval")
+  private IntradayInterval interval;
 }
