@@ -2,6 +2,7 @@ package io.jamiekee.alphavantage.api.interfaces;
 
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.timeseries.IntradayInterval;
+import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResult;
 
@@ -18,7 +19,8 @@ public interface IAlphaVantageClient {
   TimeSeriesResult getTimeSeries(
       IntradayInterval intradayInterval,
       String symbol
-  ) throws IOException;
+  )
+      throws IOException, MissingRequiredQueryParameterException;
 
   /**
    * Get the Intraday stock data for a single stock.
@@ -31,7 +33,8 @@ public interface IAlphaVantageClient {
       IntradayInterval intradayInterval,
       String symbol,
       OutputSize outputSize
-  ) throws IOException;
+  )
+      throws IOException, MissingRequiredQueryParameterException;
 
   /**
    * Request the TimeSeries Alpha Vantage API for a specific function and symbol.
@@ -42,7 +45,8 @@ public interface IAlphaVantageClient {
   TimeSeriesResult getTimeSeries(
       TimeSeriesFunction timeSeriesFunction,
       String symbol
-  ) throws IOException;
+  )
+      throws IOException, MissingRequiredQueryParameterException;
 
   /**
    * Request the TimeSeries Alpha Vantage API for a specific function, symbol and
@@ -56,6 +60,7 @@ public interface IAlphaVantageClient {
       TimeSeriesFunction timeSeriesFunction,
       String symbol,
       OutputSize outputSize
-  ) throws IOException;
+  )
+      throws IOException, MissingRequiredQueryParameterException;
 
 }

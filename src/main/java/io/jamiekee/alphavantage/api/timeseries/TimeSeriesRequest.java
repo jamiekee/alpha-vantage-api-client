@@ -16,7 +16,18 @@ public class TimeSeriesRequest implements APIRequest {
    * to be used the in the API request.
    * @return A Query parameter string.
    */
-  public String toQueryParameters() {
+  public String toQueryParameters()
+      throws MissingRequiredQueryParameterException {
+    if (timeSeriesFunction == null)
+      throw new MissingRequiredQueryParameterException("TimeSeriesFunction");
+    if (symbol == null)
+      throw new MissingRequiredQueryParameterException("Symbol");
+    if (timeSeriesFunction == TimeSeriesFunction.INTRADAY
+        && intradayInterval == null)
+      throw new MissingRequiredQueryParameterException(
+          "IntradayInterval", "TIME_SERIES_INTRADAY"
+      );
+
     StringBuilder builder = new StringBuilder();
     builder
         .append("function=")

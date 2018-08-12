@@ -5,6 +5,7 @@ import io.jamiekee.alphavantage.api.configuration.DataType;
 import io.jamiekee.alphavantage.api.interfaces.IAlphaVantageClient;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.timeseries.IntradayInterval;
+import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesRequest;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResult;
@@ -24,7 +25,7 @@ public class AlphaVantageClient implements IAlphaVantageClient {
   public TimeSeriesResult getTimeSeries(
       IntradayInterval intradayInterval, String symbol
   )
-      throws IOException {
+      throws IOException, MissingRequiredQueryParameterException {
     return getTimeSeries(intradayInterval, symbol, OutputSize.COMPACT);
   }
 
@@ -32,7 +33,7 @@ public class AlphaVantageClient implements IAlphaVantageClient {
   public TimeSeriesResult getTimeSeries(
       IntradayInterval intradayInterval, String symbol, OutputSize outputSize
   )
-      throws IOException {
+      throws IOException, MissingRequiredQueryParameterException {
     String queryParameters = TimeSeriesRequest.builder()
         .timeSeriesFunction(TimeSeriesFunction.INTRADAY)
         .intradayInterval(intradayInterval)
@@ -45,13 +46,13 @@ public class AlphaVantageClient implements IAlphaVantageClient {
 
   @Override
   public TimeSeriesResult getTimeSeries(TimeSeriesFunction timeSeriesFunction, String symbol)
-      throws IOException {
+      throws IOException, MissingRequiredQueryParameterException {
     return getTimeSeries(timeSeriesFunction, symbol, OutputSize.COMPACT);
   }
 
   @Override
   public TimeSeriesResult getTimeSeries(TimeSeriesFunction timeSeriesFunction, String symbol, OutputSize outputSize)
-      throws IOException {
+      throws IOException, MissingRequiredQueryParameterException {
     String queryParameters = TimeSeriesRequest.builder()
         .timeSeriesFunction(timeSeriesFunction)
         .symbol(symbol)

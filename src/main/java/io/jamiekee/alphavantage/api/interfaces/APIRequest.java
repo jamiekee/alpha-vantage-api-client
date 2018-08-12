@@ -1,5 +1,7 @@
 package io.jamiekee.alphavantage.api.interfaces;
 
+import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
+
 public interface APIRequest {
 
   /**
@@ -7,6 +9,7 @@ public interface APIRequest {
    * Alpha Vantage API.
    * @return A list of query parameters.
    */
-  String toQueryParameters();
+  String toQueryParameters()
+      throws MissingRequiredQueryParameterException;
 
 }
