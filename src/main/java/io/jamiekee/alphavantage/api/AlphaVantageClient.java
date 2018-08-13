@@ -1,5 +1,9 @@
 package io.jamiekee.alphavantage.api;
 
+import io.jamiekee.alphavantage.api.batchquote.BatchQuoteRequest;
+import io.jamiekee.alphavantage.api.batchquote.BatchQuoteResult;
+import io.jamiekee.alphavantage.api.batchquote.BatchQuoteResultDeserializer;
+import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.configuration.AlphaVantageClientConfiguration;
 import io.jamiekee.alphavantage.api.configuration.DataType;
 import io.jamiekee.alphavantage.api.interfaces.IAlphaVantageClient;
@@ -19,6 +23,7 @@ public class AlphaVantageClient implements IAlphaVantageClient {
   public AlphaVantageClient(AlphaVantageClientConfiguration configuration) {
     this.configuration = configuration;
     JsonParser.addDeserializer(TimeSeriesResult.class, new TimeSeriesResultDeserializer());
+    JsonParser.addDeserializer(BatchQuoteResult.class, new BatchQuoteResultDeserializer());
   }
 
   @Override
@@ -41,7 +46,7 @@ public class AlphaVantageClient implements IAlphaVantageClient {
         .outputSize(outputSize)
         .build()
         .toQueryParameters();
-    return getTimeSeriesResult(queryParameters);
+    return sendAPIRequest(queryParameters, TimeSeriesResult.class);
   }
 
   @Override
@@ -59,21 +64,33 @@ public class AlphaVantageClient implements IAlphaVantageClient {
         .outputSize(outputSize)
         .build()
         .toQueryParameters();
-    return getTimeSeriesResult(queryParameters);
+    return sendAPIRequest(queryParameters, TimeSeriesResult.class);
+  }
+
+  @Override
+  public BatchQuoteResult getBatchQuote(String... symbols)
+      throws MissingRequiredQueryParameterException,
+      InvalidSymbolLengthException, IOException {
+    String queryParameters = BatchQuoteRequest.builder()
+        .symbols(symbols)
+        .build()
+        .toQueryParameters();
+    return sendAPIRequest(queryParameters, BatchQuoteResult.class);
   }
 
   /**
    * Append the API Key and the DataType to the query parameters and send the
    * API request to Alpha Vantage.
    * @param queryParameters The query parameter string from the Request.
+   * @param resultObject The expected result object from the API.
    * @return The Result of the API request.
    */
-  private TimeSeriesResult getTimeSeriesResult(String queryParameters)
+  private <T> T sendAPIRequest(String queryParameters, Class<T> resultObject)
       throws IOException {
     queryParameters += "&datatype=" + DataType.JSON;
     queryParameters += "&apikey=" + configuration.getApiKey();
     return JsonParser
-        .toObject(Request.sendRequest(queryParameters), TimeSeriesResult.class);
+        .toObject(Request.sendRequest(queryParameters), resultObject);
   }
 
   private AlphaVantageClientConfiguration configuration;

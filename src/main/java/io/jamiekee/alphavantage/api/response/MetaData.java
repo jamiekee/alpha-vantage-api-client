@@ -23,4 +23,8 @@ public class MetaData {
   private String lastRefreshed;
   @JsonProperty("Interval")
   private IntradayInterval interval;
+  @JsonProperty("Notes")
+  private String notes;
+
+  public static final String META_DATA_RESPONSE_KEY = "Meta Data";
 }

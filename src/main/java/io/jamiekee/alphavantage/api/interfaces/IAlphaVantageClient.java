@@ -1,5 +1,7 @@
 package io.jamiekee.alphavantage.api.interfaces;
 
+import io.jamiekee.alphavantage.api.batchquote.BatchQuoteResult;
+import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.timeseries.IntradayInterval;
 import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
@@ -63,4 +65,12 @@ public interface IAlphaVantageClient {
   )
       throws IOException, MissingRequiredQueryParameterException;
 
+  /**
+   * Request the BatchQuote API for a quote on a selection of specific Symbols.
+   * @param symbols The Symbols to get a quote.
+   * @return The quotes for the symbols requested.
+   */
+  BatchQuoteResult getBatchQuote(String... symbols)
+      throws MissingRequiredQueryParameterException,
+      InvalidSymbolLengthException, IOException;
 }
