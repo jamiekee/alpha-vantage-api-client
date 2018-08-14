@@ -1,5 +1,6 @@
 package io.jamiekee.alphavantage.api.timeseries;
 
+import io.jamiekee.alphavantage.api.request.IntradayInterval;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import org.junit.jupiter.api.Test;
 

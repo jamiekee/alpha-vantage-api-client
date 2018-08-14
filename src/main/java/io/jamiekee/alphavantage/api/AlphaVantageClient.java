@@ -6,9 +6,13 @@ import io.jamiekee.alphavantage.api.batchquote.BatchQuoteResultDeserializer;
 import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.configuration.AlphaVantageClientConfiguration;
 import io.jamiekee.alphavantage.api.configuration.DataType;
-import io.jamiekee.alphavantage.api.interfaces.IAlphaVantageClient;
+import io.jamiekee.alphavantage.api.configuration.IAlphaVantageClient;
+import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeQuote;
+import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeRequest;
+import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeResult;
+import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeResultDeserializer;
 import io.jamiekee.alphavantage.api.request.OutputSize;
-import io.jamiekee.alphavantage.api.timeseries.IntradayInterval;
+import io.jamiekee.alphavantage.api.request.IntradayInterval;
 import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesRequest;
@@ -24,6 +28,7 @@ public class AlphaVantageClient implements IAlphaVantageClient {
     this.configuration = configuration;
     JsonParser.addDeserializer(TimeSeriesResult.class, new TimeSeriesResultDeserializer());
     JsonParser.addDeserializer(BatchQuoteResult.class, new BatchQuoteResultDeserializer());
+    JsonParser.addDeserializer(CurrencyExchangeResult.class, new CurrencyExchangeResultDeserializer());
   }
 
   @Override
@@ -76,6 +81,18 @@ public class AlphaVantageClient implements IAlphaVantageClient {
         .build()
         .toQueryParameters();
     return sendAPIRequest(queryParameters, BatchQuoteResult.class);
+  }
+
+  public CurrencyExchangeQuote getCurrencyExchange(String fromCurrency, String toCurrency)
+      throws MissingRequiredQueryParameterException,
+      InvalidSymbolLengthException, IOException {
+    String queryParameters = CurrencyExchangeRequest.builder()
+        .fromCurrency(fromCurrency)
+        .toCurrency(toCurrency)
+        .build()
+        .toQueryParameters();
+    return sendAPIRequest(queryParameters, CurrencyExchangeResult.class)
+        .getQuote();
   }
 
   /**

@@ -2,7 +2,7 @@ package io.jamiekee.alphavantage.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.jamiekee.alphavantage.api.request.OutputSize;
-import io.jamiekee.alphavantage.api.timeseries.IntradayInterval;
+import io.jamiekee.alphavantage.api.request.IntradayInterval;
 import lombok.Data;
 
 /**

@@ -1,9 +1,10 @@
-package io.jamiekee.alphavantage.api.interfaces;
+package io.jamiekee.alphavantage.api.configuration;
 
 import io.jamiekee.alphavantage.api.batchquote.BatchQuoteResult;
 import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
+import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeQuote;
 import io.jamiekee.alphavantage.api.request.OutputSize;
-import io.jamiekee.alphavantage.api.timeseries.IntradayInterval;
+import io.jamiekee.alphavantage.api.request.IntradayInterval;
 import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResult;
@@ -71,6 +72,16 @@ public interface IAlphaVantageClient {
    * @return The quotes for the symbols requested.
    */
   BatchQuoteResult getBatchQuote(String... symbols)
+      throws MissingRequiredQueryParameterException,
+      InvalidSymbolLengthException, IOException;
+
+  /**
+   * Request a currency exchange rate from one currency to another.
+   * @param fromCurrency The from currency in the exchange rate.
+   * @param toCurrency The to currency in the exchange rate.
+   * @return  The quote for the currency exchange.
+   */
+  CurrencyExchangeQuote getCurrencyExchange(String fromCurrency, String toCurrency)
       throws MissingRequiredQueryParameterException,
       InvalidSymbolLengthException, IOException;
 }

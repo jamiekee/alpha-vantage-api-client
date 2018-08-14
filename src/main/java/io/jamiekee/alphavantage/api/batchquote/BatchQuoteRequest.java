@@ -1,11 +1,10 @@
 package io.jamiekee.alphavantage.api.batchquote;
 
-import io.jamiekee.alphavantage.api.interfaces.APIRequest;
+import io.jamiekee.alphavantage.api.request.APIRequest;
 import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

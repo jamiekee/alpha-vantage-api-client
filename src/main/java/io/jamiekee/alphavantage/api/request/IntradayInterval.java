@@ -1,4 +1,4 @@
-package io.jamiekee.alphavantage.api.timeseries;
+package io.jamiekee.alphavantage.api.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

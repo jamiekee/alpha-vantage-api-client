@@ -14,7 +14,7 @@ import java.util.TreeMap;
 
 import static io.jamiekee.alphavantage.api.response.MetaData.META_DATA_RESPONSE_KEY;
 
-public class AlphaVantageResultDeserializerHelper<T> {
+public class AlphaVantageResultDeserializerHelper {
 
   public static Map<String, Object> sanitizeNodeKeys(JsonNode jsonNode) {
     Map<String, Object> sanitizedNodes = new HashMap<>();
