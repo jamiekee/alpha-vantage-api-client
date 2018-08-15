@@ -7,10 +7,14 @@ import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.configuration.AlphaVantageClientConfiguration;
 import io.jamiekee.alphavantage.api.configuration.DataType;
 import io.jamiekee.alphavantage.api.configuration.IAlphaVantageClient;
-import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeQuote;
+import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchange;
 import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeRequest;
 import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeResult;
 import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeResultDeserializer;
+import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeFunction;
+import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeRequest;
+import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeResult;
+import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeResultDeserializer;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.request.IntradayInterval;
 import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
@@ -29,6 +33,7 @@ public class AlphaVantageClient implements IAlphaVantageClient {
     JsonParser.addDeserializer(TimeSeriesResult.class, new TimeSeriesResultDeserializer());
     JsonParser.addDeserializer(BatchQuoteResult.class, new BatchQuoteResultDeserializer());
     JsonParser.addDeserializer(CurrencyExchangeResult.class, new CurrencyExchangeResultDeserializer());
+    JsonParser.addDeserializer(ForeignExchangeResult.class, new ForeignExchangeResultDeserializer());
   }
 
   @Override
@@ -83,7 +88,8 @@ public class AlphaVantageClient implements IAlphaVantageClient {
     return sendAPIRequest(queryParameters, BatchQuoteResult.class);
   }
 
-  public CurrencyExchangeQuote getCurrencyExchange(String fromCurrency, String toCurrency)
+  @Override
+  public CurrencyExchange getCurrencyExchange(String fromCurrency, String toCurrency)
       throws MissingRequiredQueryParameterException,
       InvalidSymbolLengthException, IOException {
     String queryParameters = CurrencyExchangeRequest.builder()
@@ -93,6 +99,20 @@ public class AlphaVantageClient implements IAlphaVantageClient {
         .toQueryParameters();
     return sendAPIRequest(queryParameters, CurrencyExchangeResult.class)
         .getQuote();
+  }
+
+  public ForeignExchangeResult getForeignExchange(
+      ForeignExchangeFunction function, String fromCurrency, String toCurrency
+  )
+      throws MissingRequiredQueryParameterException,
+      InvalidSymbolLengthException, IOException {
+    String queryParameters = ForeignExchangeRequest.builder()
+        .function(function)
+        .fromCurrency(fromCurrency)
+        .toCurrency(toCurrency)
+        .build()
+        .toQueryParameters();
+    return sendAPIRequest(queryParameters, ForeignExchangeResult.class);
   }
 
   /**

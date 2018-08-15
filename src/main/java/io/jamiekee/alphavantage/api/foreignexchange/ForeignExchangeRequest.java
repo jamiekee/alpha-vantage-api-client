@@ -33,10 +33,10 @@ public class ForeignExchangeRequest implements APIRequest {
         .append("function=")
         .append(function);
     builder
-        .append("&fromCurrency=")
+        .append("&from_symbol=")
         .append(fromCurrency);
     builder
-        .append("&toCurrency=")
+        .append("&to_symbol=")
         .append(toCurrency);
     if (outputSize != null) {
       builder
@@ -56,4 +56,5 @@ public class ForeignExchangeRequest implements APIRequest {
   private String toCurrency;
   private IntradayInterval intradayInterval;
   private OutputSize outputSize;
+
 }

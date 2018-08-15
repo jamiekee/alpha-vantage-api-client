@@ -38,5 +38,40 @@ public class AlphaVantageResultDeserializerHelper {
     );
   }
 
+  public static <T> Map<Date, T> getDateObjectMap(JsonNode node, Class<T> resultObject) {
+    Map<Date, T> dateObjMap = new TreeMap<>();
+    node.fields().forEachRemaining(nodeEntry -> {
+      // ignore meta data, we want the time series data
+      if (!nodeEntry.getKey().equals(META_DATA_RESPONSE_KEY)) {
+        nodeEntry.getValue().fields().forEachRemaining(timeSeriesEntry -> {
+          try {
+            dateObjMap.put(
+                parseDate(timeSeriesEntry.getKey()),
+                JsonParser.toObject(
+                    JsonParser.toJson(sanitizeNodeKeys(timeSeriesEntry.getValue())),
+                    resultObject
+                )
+            );
+          }
+          catch (IOException | ParseException e) {
+            e.printStackTrace();
+          }
+        });
+      }
+    });
+    return dateObjMap;
+  }
+
+  private static Date parseDate(String dateStr)
+      throws ParseException {
+    Date date = DATE_PARSER.parse(dateStr);
+    if (dateStr.length() > 10)
+      date = DATE_TIME_PARSER.parse(dateStr);
+    return date;
+  }
+
   private static final String REMOVE_NUMBER_REGEX = "\\d*.\\s(.*)";
+
+  private static final SimpleDateFormat DATE_TIME_PARSER = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+  private static final SimpleDateFormat DATE_PARSER = new SimpleDateFormat("yyyy-MM-dd");
 }

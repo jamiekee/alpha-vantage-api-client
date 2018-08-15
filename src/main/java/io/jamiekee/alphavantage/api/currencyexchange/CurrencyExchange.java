@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CurrencyExchangeQuote {
+public class CurrencyExchange {
 
   @JsonProperty("From_Currency Code")
   private String fromCurrency;

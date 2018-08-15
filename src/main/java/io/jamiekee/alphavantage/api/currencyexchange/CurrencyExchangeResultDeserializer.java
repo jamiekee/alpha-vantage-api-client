@@ -24,10 +24,10 @@ public class CurrencyExchangeResultDeserializer extends JsonDeserializer<Currenc
     try {
       Map<String, Object> sanitizedNodeKeys =
           sanitizeNodeKeys(node.fields().next().getValue());
-      CurrencyExchangeQuote quote =
+      CurrencyExchange quote =
           JsonParser.toObject(
               JsonParser.toJson(sanitizedNodeKeys),
-              CurrencyExchangeQuote.class
+              CurrencyExchange.class
           );
       currencyExchangeResult.setQuote(quote);
     } catch (Throwable t) {

@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class CurrencyExchangeResult {
-  private CurrencyExchangeQuote quote;
+  private CurrencyExchange quote;
 }

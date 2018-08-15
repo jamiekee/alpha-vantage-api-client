@@ -25,6 +25,10 @@ public class MetaData {
   private IntradayInterval interval;
   @JsonProperty("Notes")
   private String notes;
+  @JsonProperty("From Symbol")
+  private String fromCurrency;
+  @JsonProperty("To Symbol")
+  private String toCurrency;
 
   public static final String META_DATA_RESPONSE_KEY = "Meta Data";
 }

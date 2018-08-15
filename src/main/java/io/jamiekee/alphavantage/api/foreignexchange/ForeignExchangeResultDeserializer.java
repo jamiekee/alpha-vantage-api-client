@@ -1,51 +1,32 @@
 package io.jamiekee.alphavantage.api.foreignexchange;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.jamiekee.alphavantage.api.response.MetaData;
-import io.jamiekee.alphavantage.api.utils.JsonParser;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.Map;
 
+import static io.jamiekee.alphavantage.api.utils.AlphaVantageResultDeserializerHelper.getDateObjectMap;
 import static io.jamiekee.alphavantage.api.utils.AlphaVantageResultDeserializerHelper.getMetaData;
-import static io.jamiekee.alphavantage.api.utils.AlphaVantageResultDeserializerHelper.sanitizeNodeKeys;
 
 public class ForeignExchangeResultDeserializer extends JsonDeserializer<ForeignExchangeResult> {
   @Override
   public ForeignExchangeResult deserialize(
       com.fasterxml.jackson.core.JsonParser parser, DeserializationContext deserializationContext
   )
-      throws IOException, JsonProcessingException {
+      throws IOException {
     ForeignExchangeResult foreignExchangeResult = new ForeignExchangeResult();
     ObjectCodec oc = parser.getCodec();
     JsonNode node = oc.readTree(parser);
     try {
       MetaData metaData = getMetaData(node);
+      Map<Date, ForeignExchange> foreignExchangeQuotes =
+          getDateObjectMap(node, ForeignExchange.class);
 
-      List<ForeignExchangeQuote> foreignExchangeQuotes = new ArrayList<>();
-      node.fields().forEachRemaining(nodeEntry -> {
-        // ignore meta data, we want the time series data
-        if (!nodeEntry.getKey().equals("Meta Data")) {
-          nodeEntry.getValue().forEach(batchQuote -> {
-            try {
-              foreignExchangeQuotes.add(
-                  JsonParser.toObject(
-                      JsonParser.toJson(sanitizeNodeKeys(batchQuote)),
-                      ForeignExchangeQuote.class
-                  )
-              );
-            }
-            catch (IOException e) {
-              e.printStackTrace();
-            }
-          });
-        }
-      });
       foreignExchangeResult.setForeignExchangeQuotes(foreignExchangeQuotes);
       foreignExchangeResult.setMetaData(metaData);
     } catch (Throwable t) {
