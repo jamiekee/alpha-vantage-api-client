@@ -17,6 +17,8 @@ import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeResult;
 import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeResultDeserializer;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.request.IntradayInterval;
+import io.jamiekee.alphavantage.api.sector.SectorResult;
+import io.jamiekee.alphavantage.api.sector.SectorResultDeserializer;
 import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesRequest;
@@ -34,6 +36,7 @@ public class AlphaVantageClient implements IAlphaVantageClient {
     JsonParser.addDeserializer(BatchQuoteResult.class, new BatchQuoteResultDeserializer());
     JsonParser.addDeserializer(CurrencyExchangeResult.class, new CurrencyExchangeResultDeserializer());
     JsonParser.addDeserializer(ForeignExchangeResult.class, new ForeignExchangeResultDeserializer());
+    JsonParser.addDeserializer(SectorResult.class, new SectorResultDeserializer());
   }
 
   @Override
@@ -113,6 +116,12 @@ public class AlphaVantageClient implements IAlphaVantageClient {
         .build()
         .toQueryParameters();
     return sendAPIRequest(queryParameters, ForeignExchangeResult.class);
+  }
+
+  public SectorResult getSectorPerformances()
+      throws IOException {
+    String queryParameters = "function=SECTOR";
+    return sendAPIRequest(queryParameters, SectorResult.class);
   }
 
   /**
