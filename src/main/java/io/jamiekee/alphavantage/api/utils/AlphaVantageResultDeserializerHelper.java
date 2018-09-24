@@ -18,12 +18,15 @@ public class AlphaVantageResultDeserializerHelper {
 
   public static Map<String, Object> sanitizeNodeKeys(JsonNode jsonNode) {
     Map<String, Object> sanitizedNodes = new HashMap<>();
-    jsonNode.fields().forEachRemaining((node) ->
-        sanitizedNodes.put(
-            Regex.getMatch(REMOVE_NUMBER_REGEX, node.getKey()),
-            node.getValue()
-        )
-    );
+    jsonNode.fields().forEachRemaining((node) -> {
+      String regexMatch = Regex.getMatch(REMOVE_NUMBER_REGEX, node.getKey());
+      if (regexMatch != null) {
+        sanitizedNodes.put(regexMatch, node.getValue());
+      }
+      else {
+        sanitizedNodes.put(node.getKey(), node.getValue());
+      }
+    });
     return sanitizedNodes;
   }
 

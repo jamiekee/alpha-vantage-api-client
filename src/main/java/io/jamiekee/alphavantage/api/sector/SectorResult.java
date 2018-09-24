@@ -7,8 +7,6 @@ import java.util.Map;
 
 @Data
 public class SectorResult {
-
   private MetaData metaData;
-  private Map<SectorTime, SectorQuote> timedSectorPerformances;
-
+  private Map<SectorTime, Map<Sector, Double>> timedSectorPerformances;
 }
