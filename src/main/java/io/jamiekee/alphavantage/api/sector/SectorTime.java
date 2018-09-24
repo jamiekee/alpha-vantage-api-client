@@ -18,6 +18,11 @@ public enum SectorTime {
     this.fieldName = fieldName;
   }
 
+  /**
+   * Get the SectorTime from the String contained in the JSON.
+   * @param fieldName The JSON field name.
+   * @return The respective SectorTime.
+   */
   static SectorTime fromFieldName(String fieldName) {
     for (SectorTime sectorTime : SectorTime.values()) {
       if (sectorTime.getFieldName().equals(fieldName)) {

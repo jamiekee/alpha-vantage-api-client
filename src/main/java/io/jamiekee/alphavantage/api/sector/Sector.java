@@ -19,6 +19,11 @@ public enum Sector {
     this.fieldName = fieldName;
   }
 
+  /**
+   * Get the Sector from the String contained in the JSON.
+   * @param fieldName The JSON field name.
+   * @return The respective Sector.
+   */
   static Sector fromFieldName(String fieldName) {
     for (Sector sector : Sector.values()) {
       if (sector.getFieldName().equals(fieldName)) {
