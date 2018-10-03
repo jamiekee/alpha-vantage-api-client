@@ -2,7 +2,7 @@ package io.jamiekee.alphavantage.api.currencyexchange;
 
 import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.request.APIRequest;
-import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
+import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,17 +19,14 @@ public class CurrencyExchangeRequest implements APIRequest {
     if (toCurrency == null)
       throw new MissingRequiredQueryParameterException("ToCurrency");
 
-    StringBuilder builder = new StringBuilder();
-    builder
-        .append("function=")
-        .append(function);
-    builder
+    return new StringBuilder()
+        .append("indicator=")
+        .append(function)
         .append("&from_currency=")
-        .append(fromCurrency);
-    builder
+        .append(fromCurrency)
         .append("&to_currency=")
-        .append(toCurrency);
-    return builder.toString();
+        .append(toCurrency)
+        .toString();
   }
 
   private String fromCurrency;

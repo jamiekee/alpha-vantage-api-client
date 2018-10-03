@@ -1,4 +1,4 @@
-package io.jamiekee.alphavantage.api.timeseries;
+package io.jamiekee.alphavantage.api.request;
 
 public class MissingRequiredQueryParameterException extends Exception {
 

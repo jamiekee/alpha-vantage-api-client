@@ -1,10 +1,9 @@
 package io.jamiekee.alphavantage.api.foreignexchange;
 
-import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.request.APIRequest;
 import io.jamiekee.alphavantage.api.request.IntradayInterval;
 import io.jamiekee.alphavantage.api.request.OutputSize;
-import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
+import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,8 +13,7 @@ public class ForeignExchangeRequest implements APIRequest {
 
   @Override
   public String toQueryParameters()
-      throws MissingRequiredQueryParameterException,
-      InvalidSymbolLengthException {
+      throws MissingRequiredQueryParameterException {
     if (function == null)
       throw new MissingRequiredQueryParameterException("ForeignExchangeFunction");
     if (fromCurrency == null)
@@ -30,14 +28,13 @@ public class ForeignExchangeRequest implements APIRequest {
 
     StringBuilder builder = new StringBuilder();
     builder
-        .append("function=")
-        .append(function);
-    builder
+        .append("indicator=")
+        .append(function)
         .append("&from_symbol=")
-        .append(fromCurrency);
-    builder
+        .append(fromCurrency)
         .append("&to_symbol=")
         .append(toCurrency);
+
     if (outputSize != null) {
       builder
           .append("&outputsize=")

@@ -1,6 +1,7 @@
 package io.jamiekee.alphavantage.api.timeseries;
 
 import io.jamiekee.alphavantage.api.request.IntradayInterval;
+import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class TimeSeriesRequestTest {
 
     assertEquals(
         queryParameters,
-        "function=TIME_SERIES_INTRADAY&symbol=TEST&outputsize=COMPACT&interval=1min"
+        "indicator=TIME_SERIES_INTRADAY&symbol=TEST&outputsize=COMPACT&interval=1min"
     );
   }
 
@@ -39,7 +40,7 @@ class TimeSeriesRequestTest {
 
     assertEquals(
         queryParameters,
-        "function=TIME_SERIES_DAILY&symbol=TEST"
+        "indicator=TIME_SERIES_DAILY&symbol=TEST"
     );
   }
 

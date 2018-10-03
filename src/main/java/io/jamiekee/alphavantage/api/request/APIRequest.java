@@ -1,7 +1,6 @@
 package io.jamiekee.alphavantage.api.request;
 
 import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
-import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
 
 public interface APIRequest {
 

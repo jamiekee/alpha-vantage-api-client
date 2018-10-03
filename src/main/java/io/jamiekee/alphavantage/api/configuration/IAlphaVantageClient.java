@@ -5,7 +5,7 @@ import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchange;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.request.IntradayInterval;
-import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
+import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResult;
 
@@ -40,8 +40,8 @@ public interface IAlphaVantageClient {
       throws IOException, MissingRequiredQueryParameterException;
 
   /**
-   * Request the TimeSeries Alpha Vantage API for a specific function and symbol.
-   * @param timeSeriesFunction The function for the TimeSeries request.
+   * Request the TimeSeries Alpha Vantage API for a specific indicator and symbol.
+   * @param timeSeriesFunction The indicator for the TimeSeries request.
    * @param symbol The stock to get the data for.
    * @return The TimeSeries API response.
    */
@@ -52,9 +52,9 @@ public interface IAlphaVantageClient {
       throws IOException, MissingRequiredQueryParameterException;
 
   /**
-   * Request the TimeSeries Alpha Vantage API for a specific function, symbol and
+   * Request the TimeSeries Alpha Vantage API for a specific indicator, symbol and
    * output size.
-   * @param timeSeriesFunction The function for the TimeSeries request.
+   * @param timeSeriesFunction The indicator for the TimeSeries request.
    * @param symbol The stock to get the data for.
    * @param outputSize The output size of either Compact or Full.
    * @return The TimeSeries API response.

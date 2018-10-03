@@ -1,7 +1,7 @@
 package io.jamiekee.alphavantage.api.batchquote;
 
 import io.jamiekee.alphavantage.api.request.APIRequest;
-import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
+import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,7 +20,7 @@ public class BatchQuoteRequest implements APIRequest {
       throw new MissingRequiredQueryParameterException("Symbols");
     if (symbols.length == 0 || symbols.length > 100)
       throw new InvalidSymbolLengthException(symbols.length);
-    return "function=BATCH_QUOTES_US&symbols=" +
+    return "indicator=BATCH_QUOTES_US&symbols=" +
        Stream.of(symbols)
          .map(Object::toString)
          .collect(Collectors.joining(","));

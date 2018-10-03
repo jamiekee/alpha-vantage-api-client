@@ -19,7 +19,12 @@ import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.request.IntradayInterval;
 import io.jamiekee.alphavantage.api.sector.SectorResult;
 import io.jamiekee.alphavantage.api.sector.SectorResultDeserializer;
-import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
+import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
+import io.jamiekee.alphavantage.api.technical.TechnicalIndicator;
+import io.jamiekee.alphavantage.api.technical.TechnicalIndicatorRequest;
+import io.jamiekee.alphavantage.api.technical.TechnicalIndicatorResult;
+import io.jamiekee.alphavantage.api.technical.TechnicalInterval;
+import io.jamiekee.alphavantage.api.technical.TechnicalSeriesType;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesRequest;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResult;
@@ -40,17 +45,14 @@ public class AlphaVantageClient implements IAlphaVantageClient {
   }
 
   @Override
-  public TimeSeriesResult getTimeSeries(
-      IntradayInterval intradayInterval, String symbol
-  )
+  public TimeSeriesResult getTimeSeries(IntradayInterval intradayInterval, String symbol)
       throws IOException, MissingRequiredQueryParameterException {
     return getTimeSeries(intradayInterval, symbol, OutputSize.COMPACT);
   }
 
   @Override
-  public TimeSeriesResult getTimeSeries(
-      IntradayInterval intradayInterval, String symbol, OutputSize outputSize
-  )
+  public TimeSeriesResult getTimeSeries(IntradayInterval intradayInterval,
+                                        String symbol, OutputSize outputSize)
       throws IOException, MissingRequiredQueryParameterException {
     String queryParameters = TimeSeriesRequest.builder()
         .timeSeriesFunction(TimeSeriesFunction.INTRADAY)
@@ -69,7 +71,8 @@ public class AlphaVantageClient implements IAlphaVantageClient {
   }
 
   @Override
-  public TimeSeriesResult getTimeSeries(TimeSeriesFunction timeSeriesFunction, String symbol, OutputSize outputSize)
+  public TimeSeriesResult getTimeSeries(TimeSeriesFunction timeSeriesFunction,
+                                        String symbol, OutputSize outputSize)
       throws IOException, MissingRequiredQueryParameterException {
     String queryParameters = TimeSeriesRequest.builder()
         .timeSeriesFunction(timeSeriesFunction)
@@ -104,9 +107,8 @@ public class AlphaVantageClient implements IAlphaVantageClient {
         .getQuote();
   }
 
-  public ForeignExchangeResult getForeignExchange(
-      ForeignExchangeFunction function, String fromCurrency, String toCurrency
-  )
+  public ForeignExchangeResult getForeignExchange(ForeignExchangeFunction function,
+                                                  String fromCurrency, String toCurrency)
       throws MissingRequiredQueryParameterException,
       InvalidSymbolLengthException, IOException {
     String queryParameters = ForeignExchangeRequest.builder()
@@ -120,8 +122,24 @@ public class AlphaVantageClient implements IAlphaVantageClient {
 
   public SectorResult getSectorPerformances()
       throws IOException {
-    String queryParameters = "function=SECTOR";
+    String queryParameters = "indicator=SECTOR";
     return sendAPIRequest(queryParameters, SectorResult.class);
+  }
+
+  public TechnicalIndicatorResult getTechnicalIndicator(TechnicalIndicator indicator, String symbol,
+                                                        TechnicalInterval interval, int timePeriod,
+                                                        TechnicalSeriesType seriesType)
+      throws MissingRequiredQueryParameterException,
+      InvalidSymbolLengthException, IOException {
+    String queryParameters = TechnicalIndicatorRequest.builder()
+        .function(indicator)
+        .symbol(symbol)
+        .interval(interval)
+        .timePeriod(timePeriod)
+        .seriesType(seriesType)
+        .build()
+        .toQueryParameters();
+    return sendAPIRequest(queryParameters, TechnicalIndicatorResult.class);
   }
 
   /**
