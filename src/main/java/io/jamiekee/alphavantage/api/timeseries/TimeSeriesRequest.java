@@ -32,7 +32,7 @@ public class TimeSeriesRequest implements APIRequest {
 
     StringBuilder builder = new StringBuilder();
     builder
-        .append("indicator=")
+        .append("function=")
         .append(timeSeriesFunction.getQueryParameterKey());
     builder
         .append("&symbol=")

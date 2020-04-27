@@ -28,7 +28,7 @@ public class ForeignExchangeRequest implements APIRequest {
 
     StringBuilder builder = new StringBuilder();
     builder
-        .append("indicator=")
+        .append("function=")
         .append(function)
         .append("&from_symbol=")
         .append(fromCurrency)

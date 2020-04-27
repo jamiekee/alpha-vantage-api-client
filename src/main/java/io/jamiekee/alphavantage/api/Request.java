@@ -17,8 +17,10 @@ class Request {
    * @return The API response in JSON.
    */
   static String sendRequest(String queryParameters) {
-    ResponseEntity<String> responseEntity = new RestTemplate()
-        .getForEntity(ALPHA_VANTAGE_URL + queryParameters, String.class);
+    String url = ALPHA_VANTAGE_URL + queryParameters;
+    System.out.println("Sending API Request to: " + url);
+    ResponseEntity<String> responseEntity = new RestTemplate().getForEntity(url, String.class);
+
     try {
       // Check if the response was an error response first.
       ErrorResponse errorResponse =

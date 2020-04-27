@@ -1,6 +1,5 @@
 package io.jamiekee.alphavantage.api.technical;
 
-import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.request.APIRequest;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import lombok.Builder;
@@ -12,8 +11,7 @@ public class TechnicalIndicatorRequest implements APIRequest {
 
   @Override
   public String toQueryParameters()
-      throws MissingRequiredQueryParameterException,
-      InvalidSymbolLengthException {
+      throws MissingRequiredQueryParameterException {
 
     if (indicator == null)
       throw new MissingRequiredQueryParameterException("ForeignExchangeFunction");
@@ -27,15 +25,15 @@ public class TechnicalIndicatorRequest implements APIRequest {
       throw new MissingRequiredQueryParameterException("SeriesType");
 
     return new StringBuilder()
-        .append("indicator=")
+        .append("function=")
         .append(indicator)
         .append("&symbol=")
         .append(symbol)
         .append("&interval=")
         .append(interval.getQueryParameterKey())
-        .append("&time_period")
+        .append("&time_period=")
         .append(timePeriod)
-        .append("&series_type")
+        .append("&series_type=")
         .append(seriesType)
         .toString();
   }
