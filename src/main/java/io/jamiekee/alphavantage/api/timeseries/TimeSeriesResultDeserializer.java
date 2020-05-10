@@ -45,12 +45,10 @@ public class TimeSeriesResultDeserializer extends JsonDeserializer<TimeSeriesRes
     return timeSeriesResult;
   }
 
-  private Date parseDate(String dateStr)
-      throws ParseException {
-    Date date = DATE_PARSER.parse(dateStr);
-    if (dateStr.length() > 10)
-      date = DATE_TIME_PARSER.parse(dateStr);
-    return date;
+  private Date parseDate(String dateStr) throws ParseException {
+    return dateStr.length() > 10 ?
+        DATE_TIME_PARSER.parse(dateStr) :
+        DATE_PARSER.parse(dateStr);
   }
 
   private Map<Date, TimeSeries> getDateObjectMap(JsonNode node) {

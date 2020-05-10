@@ -1,8 +1,7 @@
 package io.jamiekee.alphavantage.api.currencyexchange;
 
-import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.request.APIRequest;
-import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
+import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,26 +11,23 @@ public class CurrencyExchangeRequest implements APIRequest {
 
   @Override
   public String toQueryParameters()
-      throws MissingRequiredQueryParameterException,
-      InvalidSymbolLengthException {
+      throws MissingRequiredQueryParameterException {
     if (fromCurrency == null)
       throw new MissingRequiredQueryParameterException("FromCurrency");
     if (toCurrency == null)
       throw new MissingRequiredQueryParameterException("ToCurrency");
 
-    StringBuilder builder = new StringBuilder();
-    builder
+    return new StringBuilder()
         .append("function=")
-        .append(function);
-    builder
+        .append(function)
         .append("&from_currency=")
-        .append(fromCurrency);
-    builder
+        .append(fromCurrency)
         .append("&to_currency=")
-        .append(toCurrency);
-    return builder.toString();
+        .append(toCurrency)
+        .toString();
   }
 
+  // TODO :: WHY ARE THESE STRINGS
   private String fromCurrency;
   private String toCurrency;
 

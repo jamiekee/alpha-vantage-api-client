@@ -5,6 +5,5 @@ public enum ForeignExchangeFunction {
   FX_INTRADAY,
   FX_DAILY,
   FX_WEEKLY,
-  FX_MONTHLY;
-
+  FX_MONTHLY
 }

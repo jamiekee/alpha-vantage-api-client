@@ -1,10 +1,9 @@
 package io.jamiekee.alphavantage.api.foreignexchange;
 
-import io.jamiekee.alphavantage.api.batchquote.InvalidSymbolLengthException;
 import io.jamiekee.alphavantage.api.request.APIRequest;
-import io.jamiekee.alphavantage.api.request.IntradayInterval;
+import io.jamiekee.alphavantage.api.Interval;
 import io.jamiekee.alphavantage.api.request.OutputSize;
-import io.jamiekee.alphavantage.api.timeseries.MissingRequiredQueryParameterException;
+import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,8 +13,7 @@ public class ForeignExchangeRequest implements APIRequest {
 
   @Override
   public String toQueryParameters()
-      throws MissingRequiredQueryParameterException,
-      InvalidSymbolLengthException {
+      throws MissingRequiredQueryParameterException {
     if (function == null)
       throw new MissingRequiredQueryParameterException("ForeignExchangeFunction");
     if (fromCurrency == null)
@@ -23,7 +21,7 @@ public class ForeignExchangeRequest implements APIRequest {
     if (toCurrency == null)
       throw new MissingRequiredQueryParameterException("ToCurrency");
     if (function == ForeignExchangeFunction.FX_INTRADAY
-        && intradayInterval == null)
+        && interval == null)
       throw new MissingRequiredQueryParameterException(
           "IntradayInterval", "FX_INTRADAY"
       );
@@ -31,22 +29,21 @@ public class ForeignExchangeRequest implements APIRequest {
     StringBuilder builder = new StringBuilder();
     builder
         .append("function=")
-        .append(function);
-    builder
+        .append(function)
         .append("&from_symbol=")
-        .append(fromCurrency);
-    builder
+        .append(fromCurrency)
         .append("&to_symbol=")
         .append(toCurrency);
+
     if (outputSize != null) {
       builder
           .append("&outputsize=")
           .append(outputSize);
     }
-    if (intradayInterval != null) {
+    if (interval != null) {
       builder
           .append("&interval=")
-          .append(intradayInterval.getQueryParameterKey());
+          .append(interval.getQueryParameterKey());
     }
     return builder.toString();
   }
@@ -54,7 +51,7 @@ public class ForeignExchangeRequest implements APIRequest {
   private ForeignExchangeFunction function;
   private String fromCurrency;
   private String toCurrency;
-  private IntradayInterval intradayInterval;
+  private Interval interval;
   private OutputSize outputSize;
 
 }

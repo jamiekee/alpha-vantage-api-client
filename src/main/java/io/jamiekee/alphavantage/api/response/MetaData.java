@@ -2,7 +2,7 @@ package io.jamiekee.alphavantage.api.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.jamiekee.alphavantage.api.request.OutputSize;
-import io.jamiekee.alphavantage.api.request.IntradayInterval;
+import io.jamiekee.alphavantage.api.Interval;
 import lombok.Data;
 
 /**
@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class MetaData {
+
   @JsonProperty("Information")
   private String information;
   @JsonProperty("Symbol")
@@ -22,7 +23,7 @@ public class MetaData {
   @JsonProperty("Last Refreshed")
   private String lastRefreshed;
   @JsonProperty("Interval")
-  private IntradayInterval interval;
+  private Interval interval;
   @JsonProperty("Notes")
   private String notes;
   @JsonProperty("From Symbol")
