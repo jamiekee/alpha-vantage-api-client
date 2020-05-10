@@ -12,11 +12,11 @@ import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeRequest;
 import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeResult;
 import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeResultDeserializer;
 import io.jamiekee.alphavantage.api.request.OutputSize;
-import io.jamiekee.alphavantage.api.request.IntradayInterval;
 import io.jamiekee.alphavantage.api.sector.SectorResult;
 import io.jamiekee.alphavantage.api.sector.SectorResultDeserializer;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.technical.TechnicalIndicator;
+import io.jamiekee.alphavantage.api.technical.TechnicalIndicatorDeserializer;
 import io.jamiekee.alphavantage.api.technical.TechnicalIndicatorRequest;
 import io.jamiekee.alphavantage.api.technical.TechnicalIndicatorResult;
 import io.jamiekee.alphavantage.api.technical.TechnicalInterval;
@@ -37,21 +37,22 @@ public class AlphaVantageClient implements IAlphaVantageClient {
     JsonParser.addDeserializer(CurrencyExchangeResult.class, new CurrencyExchangeResultDeserializer());
     JsonParser.addDeserializer(ForeignExchangeResult.class, new ForeignExchangeResultDeserializer());
     JsonParser.addDeserializer(SectorResult.class, new SectorResultDeserializer());
+    JsonParser.addDeserializer(TechnicalIndicatorResult.class, new TechnicalIndicatorDeserializer());
   }
 
   @Override
-  public TimeSeriesResult getTimeSeries(IntradayInterval intradayInterval, String symbol)
+  public TimeSeriesResult getTimeSeries(Interval interval, String symbol)
       throws IOException, MissingRequiredQueryParameterException {
-    return getTimeSeries(intradayInterval, symbol, OutputSize.COMPACT);
+    return getTimeSeries(interval, symbol, OutputSize.COMPACT);
   }
 
   @Override
-  public TimeSeriesResult getTimeSeries(IntradayInterval intradayInterval,
+  public TimeSeriesResult getTimeSeries(Interval interval,
                                         String symbol, OutputSize outputSize)
       throws IOException, MissingRequiredQueryParameterException {
     String queryParameters = TimeSeriesRequest.builder()
         .timeSeriesFunction(TimeSeriesFunction.INTRADAY)
-        .intradayInterval(intradayInterval)
+        .interval(interval)
         .symbol(symbol)
         .outputSize(outputSize)
         .build()
@@ -106,6 +107,12 @@ public class AlphaVantageClient implements IAlphaVantageClient {
       throws IOException {
     String queryParameters = "function=SECTOR";
     return sendAPIRequest(queryParameters, SectorResult.class);
+  }
+
+  public TechnicalIndicatorResult getTechnicalIndicator(TechnicalIndicator indicator, String symbol,
+                                                        TechnicalInterval interval)
+      throws MissingRequiredQueryParameterException, IOException {
+    return getTechnicalIndicator(indicator, symbol, interval, -1, null);
   }
 
   public TechnicalIndicatorResult getTechnicalIndicator(TechnicalIndicator indicator, String symbol,

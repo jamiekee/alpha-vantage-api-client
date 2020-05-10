@@ -2,7 +2,7 @@ package io.jamiekee.alphavantage.api.configuration;
 
 import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchange;
 import io.jamiekee.alphavantage.api.request.OutputSize;
-import io.jamiekee.alphavantage.api.request.IntradayInterval;
+import io.jamiekee.alphavantage.api.Interval;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResult;
@@ -13,25 +13,25 @@ public interface IAlphaVantageClient {
 
   /**
    * Get the Intraday stock data for a single stock.
-   * @param intradayInterval The interval between stock quotes.
+   * @param interval The interval between stock quotes.
    * @param symbol The stock to get the data for.
    * @return The Intraday API response.
    */
   TimeSeriesResult getTimeSeries(
-      IntradayInterval intradayInterval,
+      Interval interval,
       String symbol
   )
       throws IOException, MissingRequiredQueryParameterException;
 
   /**
    * Get the Intraday stock data for a single stock.
-   * @param intradayInterval The interval between stock quotes.
+   * @param interval The interval between stock quotes.
    * @param symbol The stock to get the data for.
    * @param outputSize The output size of either Compact or Full.
    * @return The Intraday API response.
    */
   TimeSeriesResult getTimeSeries(
-      IntradayInterval intradayInterval,
+      Interval interval,
       String symbol,
       OutputSize outputSize
   )

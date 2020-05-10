@@ -1,6 +1,6 @@
 package io.jamiekee.alphavantage.api.timeseries;
 
-import io.jamiekee.alphavantage.api.request.IntradayInterval;
+import io.jamiekee.alphavantage.api.Interval;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class TimeSeriesRequestTest {
       throws MissingRequiredQueryParameterException {
     TimeSeriesRequest request = TimeSeriesRequest.builder()
         .timeSeriesFunction(TimeSeriesFunction.INTRADAY)
-        .intradayInterval(IntradayInterval.ONE_MINUTE)
+        .interval(Interval.ONE_MINUTE)
         .outputSize(OutputSize.COMPACT)
         .symbol("TEST")
         .build();

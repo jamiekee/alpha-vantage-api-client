@@ -10,6 +10,6 @@ import java.util.Map;
 public class TechnicalIndicatorResult {
 
   private MetaData metaData;
-  private Map<Date, Double> technicalAnalysis;
+  private Map<Date, Map<TechnicalIndicator, Double>> technicalAnalysis;
 
 }

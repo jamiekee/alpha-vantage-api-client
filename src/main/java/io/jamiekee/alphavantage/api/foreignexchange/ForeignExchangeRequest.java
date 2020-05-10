@@ -1,7 +1,7 @@
 package io.jamiekee.alphavantage.api.foreignexchange;
 
 import io.jamiekee.alphavantage.api.request.APIRequest;
-import io.jamiekee.alphavantage.api.request.IntradayInterval;
+import io.jamiekee.alphavantage.api.Interval;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import lombok.Builder;
@@ -21,7 +21,7 @@ public class ForeignExchangeRequest implements APIRequest {
     if (toCurrency == null)
       throw new MissingRequiredQueryParameterException("ToCurrency");
     if (function == ForeignExchangeFunction.FX_INTRADAY
-        && intradayInterval == null)
+        && interval == null)
       throw new MissingRequiredQueryParameterException(
           "IntradayInterval", "FX_INTRADAY"
       );
@@ -40,10 +40,10 @@ public class ForeignExchangeRequest implements APIRequest {
           .append("&outputsize=")
           .append(outputSize);
     }
-    if (intradayInterval != null) {
+    if (interval != null) {
       builder
           .append("&interval=")
-          .append(intradayInterval.getQueryParameterKey());
+          .append(interval.getQueryParameterKey());
     }
     return builder.toString();
   }
@@ -51,7 +51,7 @@ public class ForeignExchangeRequest implements APIRequest {
   private ForeignExchangeFunction function;
   private String fromCurrency;
   private String toCurrency;
-  private IntradayInterval intradayInterval;
+  private Interval interval;
   private OutputSize outputSize;
 
 }

@@ -1,7 +1,7 @@
 package io.jamiekee.alphavantage.api.timeseries;
 
 import io.jamiekee.alphavantage.api.request.APIRequest;
-import io.jamiekee.alphavantage.api.request.IntradayInterval;
+import io.jamiekee.alphavantage.api.Interval;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import lombok.Builder;
@@ -25,7 +25,7 @@ public class TimeSeriesRequest implements APIRequest {
     if (symbol == null)
       throw new MissingRequiredQueryParameterException("Symbol");
     if (timeSeriesFunction == TimeSeriesFunction.INTRADAY
-        && intradayInterval == null)
+        && interval == null)
       throw new MissingRequiredQueryParameterException(
           "IntradayInterval", "TIME_SERIES_INTRADAY"
       );
@@ -42,15 +42,15 @@ public class TimeSeriesRequest implements APIRequest {
           .append("&outputsize=")
           .append(outputSize);
     }
-    if (intradayInterval != null) {
+    if (interval != null) {
       builder
           .append("&interval=")
-          .append(intradayInterval.getQueryParameterKey());
+          .append(interval.getQueryParameterKey());
     }
     return builder.toString();
   }
 
-  private IntradayInterval intradayInterval;
+  private Interval interval;
   private TimeSeriesFunction timeSeriesFunction;
   private String symbol;
   private OutputSize outputSize;

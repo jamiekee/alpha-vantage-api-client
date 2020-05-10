@@ -12,30 +12,37 @@ public class TechnicalIndicatorRequest implements APIRequest {
   @Override
   public String toQueryParameters()
       throws MissingRequiredQueryParameterException {
-
     if (indicator == null)
       throw new MissingRequiredQueryParameterException("ForeignExchangeFunction");
     if (symbol == null)
       throw new MissingRequiredQueryParameterException("Symbol");
     if (interval == null)
       throw new MissingRequiredQueryParameterException("Interval");
-    if (timePeriod <= 0)
+    if (timePeriod <= 0 && !indicator.equals(TechnicalIndicator.VWAP))
       throw new IllegalArgumentException("TimePeriod must be a positive integer");
-    if (seriesType == null)
+    if (seriesType == null && !indicator.equals(TechnicalIndicator.VWAP))
       throw new MissingRequiredQueryParameterException("SeriesType");
 
-    return new StringBuilder()
-        .append("function=")
-        .append(indicator)
-        .append("&symbol=")
-        .append(symbol)
-        .append("&interval=")
-        .append(interval.getQueryParameterKey())
-        .append("&time_period=")
-        .append(timePeriod)
-        .append("&series_type=")
-        .append(seriesType)
-        .toString();
+    StringBuilder queryBuilder =
+        new StringBuilder()
+            .append("function=")
+            .append(indicator)
+            .append("&symbol=")
+            .append(symbol)
+            .append("&interval=")
+            .append(interval.getQueryParameterKey());
+    if (timePeriod > 0) {
+      queryBuilder
+          .append("&time_period=")
+          .append(timePeriod);
+    }
+    if (seriesType != null) {
+      queryBuilder
+          .append("&series_type=")
+          .append(seriesType);
+    }
+
+    return queryBuilder.toString();
   }
 
   private TechnicalIndicator indicator;
