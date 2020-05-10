@@ -1,6 +1,7 @@
 package io.jamiekee.alphavantage.api.configuration;
 
 import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchange;
+import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeResult;
 import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.Interval;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
@@ -70,7 +71,7 @@ public interface IAlphaVantageClient {
    * @param toCurrency The to currency in the exchange rate.
    * @return The quote for the currency exchange.
    */
-  CurrencyExchange getCurrencyExchange(String fromCurrency, String toCurrency)
+  CurrencyExchangeResult getCurrencyExchange(String fromCurrency, String toCurrency)
       throws MissingRequiredQueryParameterException, IOException;
 
 }

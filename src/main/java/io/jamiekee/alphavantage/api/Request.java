@@ -1,5 +1,6 @@
 package io.jamiekee.alphavantage.api;
 
+import io.jamiekee.alphavantage.api.configuration.DataType;
 import io.jamiekee.alphavantage.api.response.ErrorResponse;
 import io.jamiekee.alphavantage.api.utils.JsonParser;
 import org.springframework.http.ResponseEntity;
@@ -9,14 +10,30 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-class Request {
+public class Request {
+
+
+  /**
+   * Append the API Key and the DataType to the query parameters and send the
+   * API request to Alpha Vantage.
+   * @param queryParameters The query parameter string from the Request.
+   * @param apiKey The API Key to append to the request.
+   * @param resultObject The expected result object from the API.
+   * @return The Result of the API request.
+   */
+  public static <T> T send(String queryParameters, String apiKey, Class<T> resultObject)
+          throws IOException {
+    queryParameters += "&datatype=" + DataType.JSON;
+    queryParameters += "&apikey=" + apiKey;
+    return JsonParser.toObject(sendRequest(queryParameters), resultObject);
+  }
 
   /**
    * This method performs the HTTP call to the Alpha Vantage API.
    * @param queryParameters Perform the API call with the given query parameters.
    * @return The API response in JSON.
    */
-  static String sendRequest(String queryParameters) {
+  private static String sendRequest(String queryParameters) {
     String url = ALPHA_VANTAGE_URL + queryParameters;
     System.out.println("Sending API Request to: " + url);
     ResponseEntity<String> responseEntity = new RestTemplate().getForEntity(url, String.class);

@@ -73,7 +73,7 @@ public class AlphaVantageResultDeserializerHelper {
     return date;
   }
 
-  private static final String REMOVE_NUMBER_REGEX = ".*:\\s(.*)";
+  private static final String REMOVE_NUMBER_REGEX = "\\d*.\\s(.*)";
 
   private static final SimpleDateFormat DATE_TIME_PARSER = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
   private static final SimpleDateFormat DATE_PARSER = new SimpleDateFormat("yyyy-MM-dd");

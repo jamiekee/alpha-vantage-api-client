@@ -3,6 +3,7 @@ package io.jamiekee.alphavantage.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jamiekee.alphavantage.api.configuration.AlphaVantageClientConfiguration;
 import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchange;
+import io.jamiekee.alphavantage.api.currencyexchange.CurrencyExchangeResult;
 import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeFunction;
 import io.jamiekee.alphavantage.api.foreignexchange.ForeignExchangeResult;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
@@ -44,11 +45,11 @@ class AlphaVantageClientIT {
 
     @Test
     void currencyExchange() throws MissingRequiredQueryParameterException, IOException {
-        CurrencyExchange currencyExchange = alphaVantageClient.getCurrencyExchange("USD", "GBP");
+        CurrencyExchangeResult currencyExchange = alphaVantageClient.getCurrencyExchange("USD", "GBP");
 
         System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(currencyExchange));
 
-        System.out.println(currencyExchange.getExchangeRate());
+        System.out.println(currencyExchange.getQuote().getExchangeRate());
     }
 
     @Test
@@ -71,41 +72,43 @@ class AlphaVantageClientIT {
     }
 
 
-    @Test
-    void technicalIndicatorResult()
-        throws IOException, MissingRequiredQueryParameterException, InterruptedException {
-        TechnicalIndicatorResult technicalIndicatorResult = null;
-        for (TechnicalIndicator value : TechnicalIndicator.values()) {
-            System.out.println("Testing Technical Indicator: " + value);
-            if (!value.canRequest()) {
-                continue;
-            }
-            if (value.equals(TechnicalIndicator.VWAP)) {
-                technicalIndicatorResult = alphaVantageClient.getTechnicalIndicator(
-                    value,
-                    "IBM",
-                    TechnicalInterval.FIFTEEN_MINUTES);
-            }
-            else {
-                technicalIndicatorResult = alphaVantageClient
-                    .getTechnicalIndicator(value, "IBM", TechnicalInterval.WEEKLY, 10,
-                        TechnicalSeriesType.OPEN);
-            }
-            Thread.sleep(20000);
-        }
-
-
-        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(technicalIndicatorResult));
-    }
-
-    @Test
-    void technicalIndicatorResultindv()
-        throws MissingRequiredQueryParameterException, IOException {
-        TechnicalIndicatorResult technicalIndicatorResult = alphaVantageClient
-            .getTechnicalIndicator(TechnicalIndicator.T3, "IBM", TechnicalInterval.WEEKLY, 10,
-                TechnicalSeriesType.OPEN);
-
-        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(technicalIndicatorResult));
-    }
+//    @Test
+//    void technicalIndicatorResult()
+//        throws IOException, MissingRequiredQueryParameterException, InterruptedException {
+//        TechnicalIndicatorResult technicalIndicatorResult = null;
+//        for (TechnicalIndicator value : TechnicalIndicator.values()) {
+//            System.out.println("Testing Technical Indicator: " + value);
+//            if (!value.canRequest()) {
+//                continue;
+//            }
+//            if (value.equals(TechnicalIndicator.VWAP)) {
+//                technicalIndicatorResult = alphaVantageClient.getTechnicalIndicatorClient().getTechnicalIndicator(
+//                    value,
+//                    "IBM",
+//                    TechnicalInterval.FIFTEEN_MINUTES);
+//            }
+//            else {
+//                technicalIndicatorResult = alphaVantageClient
+//                    .getTechnicalIndicatorClient().getTechnicalIndicator(
+//                            value, "IBM", TechnicalInterval.WEEKLY, 10,
+//                        TechnicalSeriesType.OPEN);
+//            }
+//            Thread.sleep(20000);
+//        }
+//
+//
+//        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(technicalIndicatorResult));
+//    }
+//
+//    @Test
+//    void technicalIndicatorResultindv()
+//        throws MissingRequiredQueryParameterException, IOException {
+//        TechnicalIndicatorResult technicalIndicatorResult = alphaVantageClient
+//            .getTechnicalIndicatorClient().getTechnicalIndicator(
+//                    TechnicalIndicator.T3, "IBM", TechnicalInterval.WEEKLY,
+//                        10, TechnicalSeriesType.OPEN);
+//
+//        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(technicalIndicatorResult));
+//    }
 
 }
