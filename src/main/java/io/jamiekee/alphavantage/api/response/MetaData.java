@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class MetaData {
+
   @JsonProperty("Information")
   private String information;
   @JsonProperty("Symbol")
@@ -29,26 +30,6 @@ public class MetaData {
   private String fromCurrency;
   @JsonProperty("To Symbol")
   private String toCurrency;
-//  @JsonProperty("Series Type")
-//  private String seriesType;
-//  @JsonProperty("Time Period")
-//  private String timePeriod;
-//  @JsonProperty("Period")
-//  private String period;
-//  @JsonProperty("Indicator")
-//  private String indicator;
-//  @JsonProperty("Fast Limit")
-//  private String fastLimit;
-//  @JsonProperty("Refreshed")
-//  private String refreshed;
-//  @JsonProperty("Type")
-//  private String type;
-//  @JsonProperty("Zone")
-//  private String zone;
-//  @JsonProperty("Limit")
-//  private String limit;
-//  @JsonProperty("Volume Factor (vFactor)")
-//  private String volumeFactor;
 
   public static final String META_DATA_RESPONSE_KEY = "Meta Data";
 }

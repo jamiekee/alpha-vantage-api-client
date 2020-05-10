@@ -1,4 +1,4 @@
-package io.jamiekee.alphavantage.api.technical;
+package io.jamiekee.alphavantage.api.technicalindicator;
 
 import io.jamiekee.alphavantage.api.configuration.AlphaVantageClientConfiguration;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;

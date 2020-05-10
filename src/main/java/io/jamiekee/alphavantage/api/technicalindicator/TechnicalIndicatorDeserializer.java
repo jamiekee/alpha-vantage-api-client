@@ -1,4 +1,4 @@
-package io.jamiekee.alphavantage.api.technical;
+package io.jamiekee.alphavantage.api.technicalindicator;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -6,19 +6,16 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import io.jamiekee.alphavantage.api.timeseries.TimeSeries;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import static io.jamiekee.alphavantage.api.response.MetaData.META_DATA_RESPONSE_KEY;
 import static io.jamiekee.alphavantage.api.utils.AlphaVantageResultDeserializerHelper.getMetaData;
-import static io.jamiekee.alphavantage.api.utils.AlphaVantageResultDeserializerHelper.sanitizeNodeKeys;
 
 public class TechnicalIndicatorDeserializer extends JsonDeserializer<TechnicalIndicatorResult> {
 

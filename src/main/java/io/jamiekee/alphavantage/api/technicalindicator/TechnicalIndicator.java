@@ -1,15 +1,15 @@
-package io.jamiekee.alphavantage.api.technical;
+package io.jamiekee.alphavantage.api.technicalindicator;
 
 public enum TechnicalIndicator {
 
-//  SMA(true),
-//  EMA(true),
-//  WMA(true),
-//  DEMA(true),
-//  TEMA(true),
-//  TRIMA(true),
-//  KAMA(true),
-//  MAMA(true),
+  SMA(true),
+  EMA(true),
+  WMA(true),
+  DEMA(true),
+  TEMA(true),
+  TRIMA(true),
+  KAMA(true),
+  MAMA(true),
   VWAP(true),
   T3(true),
   MACD(true),

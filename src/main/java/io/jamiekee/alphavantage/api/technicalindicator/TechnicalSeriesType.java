@@ -1,4 +1,4 @@
-package io.jamiekee.alphavantage.api.technical;
+package io.jamiekee.alphavantage.api.technicalindicator;
 
 public enum TechnicalSeriesType {
 

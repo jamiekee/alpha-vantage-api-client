@@ -13,7 +13,7 @@ import io.jamiekee.alphavantage.api.request.OutputSize;
 import io.jamiekee.alphavantage.api.sector.SectorResult;
 import io.jamiekee.alphavantage.api.sector.SectorResultDeserializer;
 import io.jamiekee.alphavantage.api.request.MissingRequiredQueryParameterException;
-import io.jamiekee.alphavantage.api.technical.*;
+import io.jamiekee.alphavantage.api.technicalindicator.TechnicalIndicatorClient;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesFunction;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesRequest;
 import io.jamiekee.alphavantage.api.timeseries.TimeSeriesResult;
@@ -106,7 +106,6 @@ public class AlphaVantageClient implements IAlphaVantageClient {
   public TechnicalIndicatorClient getTechnicalIndicatorClient() {
     return technicalIndicatorClient;
   }
-
 
   private final AlphaVantageClientConfiguration configuration;
   private final TechnicalIndicatorClient technicalIndicatorClient;
